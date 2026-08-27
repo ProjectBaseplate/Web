@@ -160,6 +160,13 @@ em{font-style:italic}
 .section-head h2{font:var(--fw-bold) var(--fs-h2)/var(--lh-heading) var(--font-display);letter-spacing:var(--ls-heading)}
 .section.inverse .section-head h2{color:var(--white)}
 .section-head .lede{margin-top:var(--space-4)}
+.section-tag{display:block;font:var(--fw-medium) var(--fs-caption)/1 var(--font-mono);letter-spacing:.04em;color:var(--steel-500);margin-bottom:var(--space-3)}
+
+/* ============================================================
+   SPLIT LAYOUT (two-column sections)
+   ============================================================ */
+.split{display:grid;grid-template-columns:.95fr 1.05fr;gap:var(--space-11);align-items:start;position:relative;z-index:1}
+@media (max-width:900px){.split{grid-template-columns:1fr}}
 
 /* ============================================================
    HERO
@@ -173,35 +180,49 @@ em{font-style:italic}
 @media (max-width:900px){.hero .wrap{grid-template-columns:1fr}}
 
 /* ============================================================
-   LISTS
+   CARD GRID (replaces plain bullet lists — bordered, accent-topped,
+   and recolors on hover)
    ============================================================ */
-.list-plain{list-style:none;display:grid;gap:var(--space-3);margin:var(--space-2) 0 var(--space-5)}
-.list-plain li{position:relative;padding-left:var(--space-6);font-size:var(--fs-body);color:var(--text-secondary);max-width:var(--layout-measure)}
-.list-plain li::before{content:"";position:absolute;left:0;top:.62em;width:8px;height:2px;background:var(--navy-700)}
-.section.inverse .list-plain li{color:var(--navy-100)}
-.section.inverse .list-plain li::before{background:var(--amber-500)}
-
-.list-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-6) var(--space-8);margin:var(--space-6) 0}
-.list-grid li{list-style:none;padding-top:var(--space-3);border-top:2px solid var(--navy-700);font-size:var(--fs-body-sm);color:var(--text-secondary)}
-@media (max-width:900px){.list-grid{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:600px){.list-grid{grid-template-columns:1fr}}
+.card-grid{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-5);margin:var(--space-6) 0;padding:0;position:relative;z-index:1}
+.card-grid li{background:var(--surface-card);border:var(--border-width) solid var(--border-default);border-top:var(--rule-strong) solid var(--unit-accent,var(--navy-700));border-radius:var(--radius-md);padding:var(--space-5);font-size:var(--fs-body-sm);line-height:var(--lh-snug);color:var(--text-secondary);transition:var(--transition-surface),background-color var(--dur-base) var(--ease-standard),color var(--dur-base) var(--ease-standard)}
+.card-grid li:hover{background:var(--action-ghost-hover);border-color:var(--navy-400);color:var(--text-primary);box-shadow:var(--shadow-2)}
+@media (max-width:900px){.card-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:600px){.card-grid{grid-template-columns:1fr}}
+.card-grid.cols-2{grid-template-columns:repeat(2,1fr)}
+@media (max-width:600px){.card-grid.cols-2{grid-template-columns:1fr}}
 
 /* ============================================================
-   UNIT SECTION HEADER (sub-brand lockup + accent hairline)
+   UNIT SECTION HEADER (sub-brand lockup + accent hairline + watermark)
    ============================================================ */
-.unit-head{border-top:2px solid var(--unit-accent,var(--navy-700));padding-top:var(--space-5);margin-bottom:var(--space-7)}
+.unit-head{border-top:2px solid var(--unit-accent,var(--navy-700));padding-top:var(--space-5);margin-bottom:var(--space-7);position:relative;z-index:1}
+.unit-shell{position:relative;overflow:hidden}
+.unit-shell>.wrap{position:relative;z-index:1}
+.unit-watermark{position:absolute;top:-.12em;right:var(--layout-gutter-lg);font:var(--fw-black) 260px/1 var(--font-wordmark);color:var(--unit-accent);opacity:.05;pointer-events:none;user-select:none;z-index:0}
+@media (max-width:900px){.unit-watermark{display:none}}
 
 /* ============================================================
-   CARD (used for the closing framework preview + emphasis boxes)
+   EMPHASIS LINE / QUOTE BLOCK (callouts — kept distinct per section
+   so no two in a row look the same)
    ============================================================ */
 .card{background:var(--surface-card);border:1px solid var(--border-default);border-radius:var(--radius-md);padding:var(--card-pad)}
-.emphasis-line{background:var(--surface-sunken);border-left:2px solid var(--amber-500);padding:var(--space-5) var(--space-6);margin:var(--space-6) 0}
+.emphasis-line{background:var(--surface-sunken);border-left:2px solid var(--amber-500);padding:var(--space-5) var(--space-6);margin:var(--space-6) 0;position:relative;z-index:1}
 .emphasis-line p{font:var(--fw-bold) var(--fs-body-lg)/var(--lh-snug) var(--font-body);color:var(--text-primary);margin:0;max-width:none}
 .section.inverse .emphasis-line{background:rgba(255,255,255,.04)}
 .section.inverse .emphasis-line p{color:var(--white)}
 
-blockquote{margin:0;padding:var(--space-6) var(--space-7);border-left:2px solid var(--amber-500);background:var(--surface-sunken)}
-blockquote p{font:var(--fw-bold) var(--fs-h4)/var(--lh-snug) var(--font-display);color:var(--text-primary);margin:0;max-width:none}
+.quote-block{border:var(--border-width) solid var(--border-default);border-top:var(--rule-strong) solid var(--unit-accent,var(--navy-700));padding:var(--space-7);background:var(--surface-sunken);position:relative;z-index:1}
+.section.sunken .quote-block{background:var(--white)}
+.quote-block p{font:var(--fw-bold) var(--fs-h3)/var(--lh-snug) var(--font-display);color:var(--text-primary);margin:0;max-width:none}
+
+/* ============================================================
+   VISION CHAIN (the four-clause closing line, decomposed by entity)
+   ============================================================ */
+.vision-chain{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-5);margin:var(--space-7) 0 var(--space-6);position:relative;z-index:1}
+.vision-chain>div{padding-top:var(--space-3);border-top:var(--rule-strong) solid var(--chain-c,var(--navy-700))}
+.vision-chain .chain-label{display:block;font:var(--fw-semibold) var(--fs-eyebrow)/1.2 var(--font-display);letter-spacing:var(--ls-eyebrow);text-transform:uppercase;color:var(--chain-c,var(--navy-700));margin-bottom:var(--space-2)}
+.vision-chain p{font-size:var(--fs-body-sm);color:var(--text-secondary);margin:0}
+@media (max-width:900px){.vision-chain{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:600px){.vision-chain{grid-template-columns:1fr}}
 
 /* ============================================================
    FOOTER
@@ -259,13 +280,14 @@ blockquote p{font:var(--fw-bold) var(--fs-h4)/var(--lh-snug) var(--font-display)
   </section>
 
   <!-- ============ WHY WE EXIST ============ -->
-  <section class="section" id="why-we-exist">
+  <section class="section lattice" id="why-we-exist">
     <div class="wrap">
+      <div class="section-tag">PB&ndash;01</div>
       <div class="section-head">
         <h2>Why We Exist</h2>
       </div>
       <p>Condominium associations are responsible for complex organizations that include:</p>
-      <ul class="list-plain">
+      <ul class="card-grid">
         <li>Multi-million-dollar operating budgets</li>
         <li>Significant reserve funds and capital projects</li>
         <li>Professional staff and vendors</li>
@@ -274,7 +296,7 @@ blockquote p{font:var(--fw-bold) var(--fs-h4)/var(--lh-snug) var(--font-display)
       </ul>
       <p>Yet most boards are composed of volunteers.</p>
       <p>Across Chicago, board leaders encounter many of the same challenges:</p>
-      <ul class="list-plain">
+      <ul class="card-grid">
         <li>Management companies focused on administration rather than leadership</li>
         <li>Inconsistent policies, procedures, and operating practices</li>
         <li>Limited access to strategic planning and organizational expertise</li>
@@ -284,27 +306,36 @@ blockquote p{font:var(--fw-bold) var(--fs-h4)/var(--lh-snug) var(--font-display)
         <li>Volunteer board members pulled into work that should be handled by management</li>
       </ul>
       <p>The result is a recurring cycle of reactive decision-making, operational inefficiency, and frustration for boards, residents, staff, and management teams.</p>
-      <div class="emphasis-line"><p>We believe condominium communities deserve better.</p></div>
+      <div class="quote-block"><p>We believe condominium communities deserve better.</p></div>
     </div>
   </section>
 
   <!-- ============ WHAT IS PROJECT BASEPLATE ============ -->
   <section class="section sunken" id="what-is">
     <div class="wrap">
-      <div class="section-head">
-        <h2>What Is Project Baseplate?</h2>
+      <div class="section-tag">PB&ndash;02</div>
+      <div class="split">
+        <div>
+          <div class="section-head">
+            <h2>What Is Project Baseplate?</h2>
+          </div>
+          <p class="measure">Project Baseplate is an initiative focused on raising the standard of condominium governance and operations.</p>
+          <p class="measure">We bring together engaged board leaders, experienced operators, and subject-matter experts to share knowledge, develop practical frameworks, and build the operational foundation that condominium communities need to thrive.</p>
+          <p class="measure">We are not another management company.</p>
+          <p class="measure">Project Baseplate serves as the umbrella for a growing community and an emerging set of advisory services, frameworks, and practical tools.</p>
+        </div>
+        <div class="quote-block">
+          <p>We are building the expertise, methodologies, and community that boards often expect from management companies but rarely receive.</p>
+        </div>
       </div>
-      <p class="measure">Project Baseplate is an initiative focused on raising the standard of condominium governance and operations.</p>
-      <p class="measure">We bring together engaged board leaders, experienced operators, and subject-matter experts to share knowledge, develop practical frameworks, and build the operational foundation that condominium communities need to thrive.</p>
-      <p class="measure">We are not another management company.</p>
-      <div class="emphasis-line"><p>We are building the expertise, methodologies, and community that boards often expect from management companies but rarely receive.</p></div>
-      <p class="measure">Project Baseplate serves as the umbrella for a growing community and an emerging set of advisory services, frameworks, and practical tools.</p>
     </div>
   </section>
 
   <!-- ============ COLLECTIVE ============ -->
-  <section class="section" id="collective" style="--unit-accent:var(--subbrand-collective)">
+  <section class="section unit-shell" id="collective" style="--unit-accent:var(--subbrand-collective)">
+    <span class="unit-watermark" aria-hidden="true">C</span>
     <div class="wrap">
+      <div class="section-tag">PB&ndash;03</div>
       <div class="unit-head wordmark">
         <span class="pb-project">Project</span>
         <span class="pb-desc">
@@ -318,7 +349,7 @@ blockquote p{font:var(--fw-bold) var(--fs-h4)/var(--lh-snug) var(--font-display)
       </div>
       <p class="measure">Project Baseplate Collective is a growing network of condominium board presidents, officers, committee leaders, and former board members committed to improving how their communities operate.</p>
       <p>Together, members share:</p>
-      <ul class="list-grid">
+      <ul class="card-grid">
         <li>Lessons learned from serving on condominium boards</li>
         <li>Real-world operating practices</li>
         <li>Capital project experiences</li>
@@ -334,8 +365,10 @@ blockquote p{font:var(--fw-bold) var(--fs-h4)/var(--lh-snug) var(--font-display)
   </section>
 
   <!-- ============ ADVISORY ============ -->
-  <section class="section sunken" id="advisory" style="--unit-accent:var(--subbrand-advisory)">
+  <section class="section sunken unit-shell" id="advisory" style="--unit-accent:var(--subbrand-advisory)">
+    <span class="unit-watermark" aria-hidden="true">A</span>
     <div class="wrap">
+      <div class="section-tag">PB&ndash;04</div>
       <div class="unit-head wordmark">
         <span class="pb-project">Project</span>
         <span class="pb-desc">
@@ -349,7 +382,7 @@ blockquote p{font:var(--fw-bold) var(--fs-h4)/var(--lh-snug) var(--font-display)
       </div>
       <p class="measure">Project Baseplate Advisory helps condominium associations address consequential organizational and operational challenges that frequently fall outside the capabilities of traditional management arrangements.</p>
       <p>Potential areas of focus include:</p>
-      <ul class="list-grid">
+      <ul class="card-grid">
         <li>Board governance and effectiveness</li>
         <li>Operational assessments</li>
         <li>Strategic and long-range planning</li>
@@ -362,14 +395,16 @@ blockquote p{font:var(--fw-bold) var(--fs-h4)/var(--lh-snug) var(--font-display)
         <li>Documentation of repeatable management systems</li>
       </ul>
       <p class="measure">Our purpose is straightforward:</p>
-      <div class="emphasis-line"><p>Help condominium communities run with the discipline of a well-managed organization and the transparency their residents deserve.</p></div>
-      <a class="btn btn-primary" href="#join-us">Start a Conversation</a>
+      <div class="quote-block"><p>Help condominium communities run with the discipline of a well-managed organization and the transparency their residents deserve.</p></div>
+      <a class="btn btn-primary" href="#join-us" style="margin-top:var(--space-6);display:inline-flex">Start a Conversation</a>
     </div>
   </section>
 
   <!-- ============ FRAMEWORKS ============ -->
-  <section class="section" id="frameworks" style="--unit-accent:var(--subbrand-frameworks)">
+  <section class="section unit-shell" id="frameworks" style="--unit-accent:var(--subbrand-frameworks)">
+    <span class="unit-watermark" aria-hidden="true">F</span>
     <div class="wrap">
+      <div class="section-tag">PB&ndash;05</div>
       <div class="unit-head wordmark">
         <span class="pb-project">Project</span>
         <span class="pb-desc">
@@ -383,7 +418,7 @@ blockquote p{font:var(--fw-bold) var(--fs-h4)/var(--lh-snug) var(--font-display)
       </div>
       <p class="measure">Project Baseplate is developing reusable methodologies, templates, and operating practices that condominium boards and their management partners can adapt to the needs of their communities.</p>
       <p>The long-term framework library may include:</p>
-      <ul class="list-grid">
+      <ul class="card-grid">
         <li>Board operating frameworks</li>
         <li>Annual governance and planning calendars</li>
         <li>Management transition playbooks</li>
@@ -402,43 +437,56 @@ blockquote p{font:var(--fw-bold) var(--fs-h4)/var(--lh-snug) var(--font-display)
   <!-- ============ WHO WE SERVE ============ -->
   <section class="section sunken" id="who-we-serve">
     <div class="wrap">
-      <div class="section-head">
-        <h2>Who We Serve</h2>
+      <div class="section-tag">PB&ndash;06</div>
+      <div class="split">
+        <div>
+          <div class="section-head">
+            <h2>Who We Serve</h2>
+          </div>
+          <p class="measure">Project Baseplate is initially focused on Chicago high-rise condominium communities, particularly those with:</p>
+          <p class="measure">We are especially interested in connecting with current and former board leaders who believe condominium governance can and should be better.</p>
+        </div>
+        <ul class="card-grid cols-2">
+          <li>Approximately 100 to 500 residential units</li>
+          <li>Volunteer-led boards</li>
+          <li>Professional management</li>
+          <li>On-site building staff and complex daily operations</li>
+          <li>Significant capital, staffing, vendor, and governance responsibilities</li>
+          <li>A desire for greater operational maturity, transparency, and accountability</li>
+        </ul>
       </div>
-      <p class="measure">Project Baseplate is initially focused on Chicago high-rise condominium communities, particularly those with:</p>
-      <ul class="list-plain">
-        <li>Approximately 100 to 500 residential units</li>
-        <li>Volunteer-led boards</li>
-        <li>Professional management</li>
-        <li>On-site building staff and complex daily operations</li>
-        <li>Significant capital, staffing, vendor, and governance responsibilities</li>
-        <li>A desire for greater operational maturity, transparency, and accountability</li>
-      </ul>
-      <p class="measure">We are especially interested in connecting with current and former board leaders who believe condominium governance can and should be better.</p>
     </div>
   </section>
 
   <!-- ============ WHY "BASEPLATE"? ============ -->
   <section class="section" id="why-baseplate">
     <div class="wrap">
-      <div class="section-head">
-        <h2>Why &ldquo;Baseplate&rdquo;?</h2>
+      <div class="section-tag">PB&ndash;07</div>
+      <div class="split">
+        <div>
+          <div class="section-head">
+            <h2>Why &ldquo;Baseplate&rdquo;?</h2>
+          </div>
+          <p class="measure">A baseplate is the foundation that helps a structure stand securely, carry weight, and operate as designed.</p>
+          <p class="measure">Too many condominium communities operate without the foundational systems, processes, institutional knowledge, and leadership frameworks required for long-term success.</p>
+        </div>
+        <div class="quote-block">
+          <p>Project Baseplate exists to help build that foundation.</p>
+        </div>
       </div>
-      <p class="measure">A baseplate is the foundation that helps a structure stand securely, carry weight, and operate as designed.</p>
-      <p class="measure">Too many condominium communities operate without the foundational systems, processes, institutional knowledge, and leadership frameworks required for long-term success.</p>
-      <div class="emphasis-line"><p>Project Baseplate exists to help build that foundation.</p></div>
     </div>
   </section>
 
   <!-- ============ OUR VISION ============ -->
   <section class="section sunken" id="vision">
     <div class="wrap">
+      <div class="section-tag">PB&ndash;08</div>
       <div class="section-head">
         <h2>Our Vision</h2>
       </div>
       <p class="measure">We believe there is an opportunity to fundamentally improve how condominium communities are governed and operated.</p>
       <p>By combining:</p>
-      <ul class="list-plain">
+      <ul class="card-grid">
         <li>Peer collaboration</li>
         <li>Proven operating frameworks</li>
         <li>Modern governance practices</li>
@@ -446,7 +494,12 @@ blockquote p{font:var(--fw-bold) var(--fs-h4)/var(--lh-snug) var(--font-display)
         <li>Tools that preserve and transfer institutional knowledge</li>
       </ul>
       <p class="measure">we can help create stronger boards, more capable organizations, and better resident experiences.</p>
-      <p class="measure">The Collective is the movement. Advisory work applies the ideas. Frameworks make the knowledge reusable. Project Baseplate is the foundation connecting them.</p>
+      <div class="vision-chain">
+        <div style="--chain-c:var(--subbrand-collective)"><span class="chain-label">Collective</span><p>The Collective is the movement.</p></div>
+        <div style="--chain-c:var(--subbrand-advisory)"><span class="chain-label">Advisory</span><p>Advisory work applies the ideas.</p></div>
+        <div style="--chain-c:var(--subbrand-frameworks)"><span class="chain-label">Frameworks</span><p>Frameworks make the knowledge reusable.</p></div>
+        <div style="--chain-c:var(--navy-700)"><span class="chain-label">Project Baseplate</span><p>Project Baseplate is the foundation connecting them.</p></div>
+      </div>
     </div>
   </section>
 
