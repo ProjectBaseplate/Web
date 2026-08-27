@@ -7,6 +7,14 @@
 <meta name="description" content="Project Baseplate is a community of condominium board leaders and advisors working to improve governance, operations, and resident experience through peer collaboration, proven frameworks, and practical expertise.">
 <style>
 /* ============================================================
+   FONTS — hybrid system (Aug 2026): web uses Saira + Source Sans 3 +
+   IBM Plex Mono, loaded from Google Fonts. The Office-safe stack
+   (Arial Narrow / Arial / Consolas) is for Word/PowerPoint templates
+   only and is not used on the website.
+   ============================================================ */
+@import url("https://fonts.googleapis.com/css2?family=Saira:wght@400;500;600;700;800&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
+
+/* ============================================================
    TOKENS — Project Baseplate Design System (verbatim values)
    ============================================================ */
 :root{
@@ -29,15 +37,16 @@
   /* Sub-brand accents */
   --subbrand-collective:var(--amber-500);--subbrand-advisory:var(--navy-500);--subbrand-frameworks:var(--steel-600);
 
-  /* Fonts — system faces only (native to Windows / macOS / Office / every browser) */
-  --font-display:"Arial Narrow","Helvetica Neue Condensed","Liberation Sans Narrow",Arial,Helvetica,sans-serif;
-  --font-body:Arial,"Helvetica Neue",Helvetica,sans-serif;
-  --font-ui:Arial,"Helvetica Neue",Helvetica,sans-serif;
-  --font-wordmark:"Arial Narrow","Helvetica Neue Condensed",Arial,sans-serif;
-  --fw-regular:400;--fw-medium:500;--fw-semibold:600;--fw-bold:700;--fw-black:700;
+  /* Fonts — hybrid system: web stack carries the brand's personality (Office-safe stack is for Word/PowerPoint only, not used here) */
+  --font-display:"Saira","Arial Narrow",Helvetica,sans-serif;
+  --font-body:"Source Sans 3","Segoe UI",Helvetica,sans-serif;
+  --font-ui:"Source Sans 3","Segoe UI",Helvetica,sans-serif;
+  --font-mono:"IBM Plex Mono",Consolas,ui-monospace,SFMono-Regular,Menlo,monospace;
+  --font-wordmark:"Saira","Arial Narrow",Helvetica,sans-serif;
+  --fw-regular:400;--fw-medium:500;--fw-semibold:600;--fw-bold:700;--fw-black:800;
   --fs-display-1:4.5rem;--fs-display-2:3.25rem;--fs-h1:2.5rem;--fs-h2:2rem;--fs-h3:1.5rem;--fs-h4:1.25rem;--fs-h5:1.0625rem;--fs-body-lg:1.125rem;--fs-body:1rem;--fs-body-sm:.875rem;--fs-caption:.8125rem;--fs-eyebrow:.75rem;--fs-micro:.6875rem;
   --lh-tight:1.02;--lh-display:1.08;--lh-heading:1.18;--lh-snug:1.35;--lh-body:1.55;--lh-loose:1.7;
-  --ls-display:-.012em;--ls-heading:-.006em;--ls-body:0;--ls-wide:.04em;--ls-eyebrow:.16em;--ls-wordmark:-.012em;--ls-project:.42em;
+  --ls-display:-.02em;--ls-heading:-.01em;--ls-body:0;--ls-wide:.04em;--ls-eyebrow:.16em;--ls-wordmark:-.025em;--ls-project:.42em;
 
   /* Spacing — 4px base grid */
   --space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;--space-6:24px;--space-7:32px;--space-8:40px;--space-9:48px;--space-10:64px;--space-11:80px;--space-12:96px;--space-13:128px;
@@ -83,7 +92,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--border-focus);outli
 img{max-width:100%;display:block}
 .wrap{max-width:var(--layout-max);margin:0 auto;padding-left:var(--layout-gutter-lg);padding-right:var(--layout-gutter-lg)}
 .baseplate-edge{height:var(--rule-strong);background:var(--edge-baseplate)}
-.eyebrow{font:var(--fw-bold) var(--fs-eyebrow)/1.2 var(--font-ui);letter-spacing:var(--ls-eyebrow);text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--space-4)}
+.eyebrow{font:var(--fw-semibold) var(--fs-eyebrow)/1.2 var(--font-display);letter-spacing:var(--ls-eyebrow);text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--space-4)}
 .eyebrow.on-inverse{color:var(--amber-400)}
 .lede{font-size:var(--fs-body-lg);line-height:var(--lh-body);color:var(--text-secondary);max-width:60ch}
 .lede.on-inverse{color:var(--navy-100)}
@@ -95,14 +104,14 @@ em{font-style:italic}
    WORDMARK (logo placeholder — see note at end of page)
    ============================================================ */
 .wordmark{display:inline-flex;flex-direction:column;gap:2px;text-decoration:none;line-height:1}
-.wordmark .pb-project{font:var(--fw-bold) 9px/1 var(--font-ui);letter-spacing:var(--ls-project);text-transform:uppercase;text-indent:.42em;color:var(--steel-400)}
+.wordmark .pb-project{font:var(--fw-semibold) 9px/1 var(--font-display);letter-spacing:var(--ls-project);text-transform:uppercase;text-indent:.42em;color:var(--steel-400)}
 .wordmark .pb-base{font:var(--fw-black) 23px/.9 var(--font-wordmark);letter-spacing:var(--ls-wordmark);text-transform:uppercase;color:var(--navy-700)}
 .wordmark.on-inverse .pb-project{color:var(--navy-200)}
 .wordmark.on-inverse .pb-base{color:var(--white)}
 .wordmark .pb-desc{display:inline-flex;align-items:baseline;gap:7px}
 .wordmark .pb-desc-rule{width:1px;align-self:stretch;background:var(--border-strong)}
 .wordmark.on-inverse .pb-desc-rule{background:var(--border-inverse)}
-.wordmark .pb-desc-word{font:var(--fw-regular) 15px/.9 var(--font-wordmark);color:var(--steel-700)}
+.wordmark .pb-desc-word{font:var(--fw-medium) 15px/.9 var(--font-wordmark);color:var(--steel-700)}
 .wordmark.on-inverse .pb-desc-word{color:var(--white)}
 .wordmark.lg .pb-project{font-size:12px}
 .wordmark.lg .pb-base{font-size:34px}
@@ -114,7 +123,7 @@ em{font-style:italic}
 .site-header{position:sticky;top:0;z-index:20;background:var(--surface-page)}
 .site-header .wrap{height:76px;display:flex;align-items:center;gap:var(--space-9)}
 .site-nav{display:flex;gap:var(--space-7);margin-left:auto}
-.site-nav a{font:var(--fw-bold) var(--fs-body-sm)/1 var(--font-ui);text-decoration:none;color:var(--text-secondary);padding-bottom:4px;border-bottom:2px solid transparent}
+.site-nav a{font:var(--fw-semibold) var(--fs-body-sm)/1 var(--font-display);text-decoration:none;color:var(--text-secondary);padding-bottom:4px;border-bottom:2px solid transparent}
 .site-nav a:hover{color:var(--text-primary)}
 .header-cta{display:flex;gap:var(--space-3);flex:0 0 auto}
 @media (max-width:900px){.site-nav{display:none}}
@@ -122,7 +131,7 @@ em{font-style:italic}
 /* ============================================================
    BUTTONS
    ============================================================ */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);height:var(--control-h-md);padding:0 var(--space-5);font:var(--fw-bold) var(--fs-body-sm)/1 var(--font-ui);letter-spacing:.01em;border-radius:var(--radius-md);border:var(--border-width) solid transparent;cursor:pointer;text-decoration:none;white-space:nowrap;transition:var(--transition-control);appearance:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);height:var(--control-h-md);padding:0 var(--space-5);font:var(--fw-semibold) var(--fs-body-sm)/1 var(--font-display);letter-spacing:.01em;border-radius:var(--radius-md);border:var(--border-width) solid transparent;cursor:pointer;text-decoration:none;white-space:nowrap;transition:var(--transition-control);appearance:none}
 .btn.lg{height:var(--control-h-lg);padding:0 var(--space-6);font-size:var(--fs-body);gap:var(--space-3)}
 .btn.sm{height:var(--control-h-sm);padding:0 var(--space-3);font-size:var(--fs-caption)}
 .btn svg{flex:0 0 auto}
