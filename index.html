@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Project Baseplate — Building the Next Generation of Condominium Leadership</title>
+<meta name="description" content="Project Baseplate is a community of condominium board leaders and advisors working to improve governance, operations, and resident experience through peer collaboration, proven frameworks, and practical expertise.">
+<style>
+/* ============================================================
+   TOKENS — Project Baseplate Design System (verbatim values)
+   ============================================================ */
+:root{
+  /* Foundation Navy */
+  --navy-900:#001426;--navy-800:#001F38;--navy-700:#002B4D;--navy-600:#0A3A61;--navy-500:#14507F;--navy-400:#2E6C9E;--navy-300:#6F9CC0;--navy-200:#B6CEE1;--navy-100:#E3EDF5;
+  /* Steel neutrals */
+  --steel-900:#1B1F22;--steel-800:#2D3438;--steel-700:#454D52;--steel-600:#5E676D;--steel-500:#7C858B;--steel-400:#888E91;--steel-300:#AFB6BA;--steel-200:#D2D7DA;--steel-100:#E8EBED;--steel-050:#F4F6F7;--white:#FFFFFF;
+  /* Signal Amber — single accent */
+  --amber-700:#7E4705;--amber-600:#A5620A;--amber-500:#C77E12;--amber-400:#E09A2B;--amber-300:#F2C173;--amber-100:#FBEBD2;
+  /* Semantic: text */
+  --text-primary:var(--navy-900);--text-secondary:var(--steel-700);--text-muted:var(--steel-500);--text-inverse:var(--white);--text-inverse-secondary:var(--navy-200);--text-accent:var(--navy-700);--text-link:var(--navy-600);--text-link-hover:var(--navy-800);
+  /* Semantic: surface */
+  --surface-page:var(--white);--surface-sunken:var(--steel-050);--surface-card:var(--white);--surface-inverse:var(--navy-800);--surface-inverse-alt:var(--navy-900);
+  /* Semantic: border */
+  --border-subtle:var(--steel-100);--border-default:var(--steel-200);--border-strong:var(--steel-300);--border-focus:var(--navy-500);--border-inverse:rgba(255,255,255,.18);
+  /* Semantic: interactive */
+  --action-primary:var(--navy-700);--action-primary-hover:var(--navy-800);--action-primary-active:var(--navy-900);
+  --action-secondary:var(--white);--action-secondary-hover:var(--steel-050);--action-ghost-hover:var(--navy-100);
+  --action-emphasis:var(--amber-500);--action-emphasis-hover:var(--amber-600);
+  /* Sub-brand accents */
+  --subbrand-collective:var(--amber-500);--subbrand-advisory:var(--navy-500);--subbrand-frameworks:var(--steel-600);
+
+  /* Fonts — system faces only (native to Windows / macOS / Office / every browser) */
+  --font-display:"Arial Narrow","Helvetica Neue Condensed","Liberation Sans Narrow",Arial,Helvetica,sans-serif;
+  --font-body:Arial,"Helvetica Neue",Helvetica,sans-serif;
+  --font-ui:Arial,"Helvetica Neue",Helvetica,sans-serif;
+  --font-wordmark:"Arial Narrow","Helvetica Neue Condensed",Arial,sans-serif;
+  --fw-regular:400;--fw-medium:500;--fw-semibold:600;--fw-bold:700;--fw-black:700;
+  --fs-display-1:4.5rem;--fs-display-2:3.25rem;--fs-h1:2.5rem;--fs-h2:2rem;--fs-h3:1.5rem;--fs-h4:1.25rem;--fs-h5:1.0625rem;--fs-body-lg:1.125rem;--fs-body:1rem;--fs-body-sm:.875rem;--fs-caption:.8125rem;--fs-eyebrow:.75rem;--fs-micro:.6875rem;
+  --lh-tight:1.02;--lh-display:1.08;--lh-heading:1.18;--lh-snug:1.35;--lh-body:1.55;--lh-loose:1.7;
+  --ls-display:-.012em;--ls-heading:-.006em;--ls-body:0;--ls-wide:.04em;--ls-eyebrow:.16em;--ls-wordmark:-.012em;--ls-project:.42em;
+
+  /* Spacing — 4px base grid */
+  --space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;--space-6:24px;--space-7:32px;--space-8:40px;--space-9:48px;--space-10:64px;--space-11:80px;--space-12:96px;--space-13:128px;
+  --layout-max:1200px;--layout-measure:68ch;--layout-gutter-lg:40px;--layout-section-y:96px;--layout-section-y-sm:64px;
+  --control-h-sm:32px;--control-h-md:40px;--control-h-lg:48px;--card-pad:24px;
+
+  /* Shape */
+  --radius-xs:2px;--radius-sm:3px;--radius-md:4px;--radius-lg:6px;--radius-xl:10px;--radius-pill:999px;
+  --border-width:1px;--border-width-thick:2px;--rule-strong:2px;
+  --shadow-1:0 1px 2px rgba(0,20,38,.07);
+  --shadow-2:0 1px 3px rgba(0,20,38,.09),0 4px 12px rgba(0,20,38,.05);
+  --shadow-3:0 2px 6px rgba(0,20,38,.08),0 12px 32px rgba(0,20,38,.12);
+  --focus-ring:0 0 0 3px rgba(20,80,127,.30);
+  --focus-ring-inverse:0 0 0 3px rgba(224,154,43,.45);
+
+  /* Motion */
+  --dur-fast:120ms;--dur-base:180ms;--dur-slow:240ms;
+  --ease-standard:cubic-bezier(.4,0,.2,1);
+  --transition-control:background-color var(--dur-fast) var(--ease-standard),border-color var(--dur-fast) var(--ease-standard),color var(--dur-fast) var(--ease-standard),box-shadow var(--dur-fast) var(--ease-standard);
+  --transition-surface:box-shadow var(--dur-base) var(--ease-standard),border-color var(--dur-base) var(--ease-standard);
+
+  /* Patterns — the lattice motif and the baseplate edge rule */
+  --lattice-size:32px;
+  --pattern-lattice-dark:repeating-linear-gradient(0deg,rgba(255,255,255,.055) 0 1px,transparent 1px var(--lattice-size)),repeating-linear-gradient(90deg,rgba(255,255,255,.055) 0 1px,transparent 1px var(--lattice-size));
+  --pattern-lattice-light:repeating-linear-gradient(0deg,rgba(0,43,77,.055) 0 1px,transparent 1px var(--lattice-size)),repeating-linear-gradient(90deg,rgba(0,43,77,.055) 0 1px,transparent 1px var(--lattice-size));
+  --edge-baseplate:linear-gradient(90deg,var(--navy-700) 0 33%,var(--navy-500) 33% 66%,var(--amber-500) 66% 100%);
+}
+@media (prefers-reduced-motion:reduce){:root{--dur-fast:0ms;--dur-base:0ms;--dur-slow:0ms}}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;font:var(--fw-regular) var(--fs-body)/var(--lh-body) var(--font-body);color:var(--text-primary);background:var(--surface-page);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+h1,h2,h3,h4{margin:0;color:var(--text-primary);text-wrap:balance;font-family:var(--font-display)}
+p{margin:0 0 var(--space-4);max-width:var(--layout-measure)}
+p:last-child{margin-bottom:0}
+ul{margin:0 0 var(--space-4);padding:0}
+a{color:var(--text-link);text-decoration-color:rgba(10,58,97,.4);text-underline-offset:2px;transition:var(--transition-control)}
+a:hover{color:var(--text-link-hover)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--border-focus);outline-offset:2px}
+img{max-width:100%;display:block}
+.wrap{max-width:var(--layout-max);margin:0 auto;padding-left:var(--layout-gutter-lg);padding-right:var(--layout-gutter-lg)}
+.baseplate-edge{height:var(--rule-strong);background:var(--edge-baseplate)}
+.eyebrow{font:var(--fw-bold) var(--fs-eyebrow)/1.2 var(--font-ui);letter-spacing:var(--ls-eyebrow);text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--space-4)}
+.eyebrow.on-inverse{color:var(--amber-400)}
+.lede{font-size:var(--fs-body-lg);line-height:var(--lh-body);color:var(--text-secondary);max-width:60ch}
+.lede.on-inverse{color:var(--navy-100)}
+.measure{max-width:70ch}
+strong{font-weight:var(--fw-bold)}
+em{font-style:italic}
+
+/* ============================================================
+   WORDMARK (logo placeholder — see note at end of page)
+   ============================================================ */
+.wordmark{display:inline-flex;flex-direction:column;gap:2px;text-decoration:none;line-height:1}
+.wordmark .pb-project{font:var(--fw-bold) 9px/1 var(--font-ui);letter-spacing:var(--ls-project);text-transform:uppercase;text-indent:.42em;color:var(--steel-400)}
+.wordmark .pb-base{font:var(--fw-black) 23px/.9 var(--font-wordmark);letter-spacing:var(--ls-wordmark);text-transform:uppercase;color:var(--navy-700)}
+.wordmark.on-inverse .pb-project{color:var(--navy-200)}
+.wordmark.on-inverse .pb-base{color:var(--white)}
+.wordmark .pb-desc{display:inline-flex;align-items:baseline;gap:7px}
+.wordmark .pb-desc-rule{width:1px;align-self:stretch;background:var(--border-strong)}
+.wordmark.on-inverse .pb-desc-rule{background:var(--border-inverse)}
+.wordmark .pb-desc-word{font:var(--fw-regular) 15px/.9 var(--font-wordmark);color:var(--steel-700)}
+.wordmark.on-inverse .pb-desc-word{color:var(--white)}
+.wordmark.lg .pb-project{font-size:12px}
+.wordmark.lg .pb-base{font-size:34px}
+.wordmark.lg .pb-desc-word{font-size:20px}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.site-header{position:sticky;top:0;z-index:20;background:var(--surface-page)}
+.site-header .wrap{height:76px;display:flex;align-items:center;gap:var(--space-9)}
+.site-nav{display:flex;gap:var(--space-7);margin-left:auto}
+.site-nav a{font:var(--fw-bold) var(--fs-body-sm)/1 var(--font-ui);text-decoration:none;color:var(--text-secondary);padding-bottom:4px;border-bottom:2px solid transparent}
+.site-nav a:hover{color:var(--text-primary)}
+.header-cta{display:flex;gap:var(--space-3);flex:0 0 auto}
+@media (max-width:900px){.site-nav{display:none}}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);height:var(--control-h-md);padding:0 var(--space-5);font:var(--fw-bold) var(--fs-body-sm)/1 var(--font-ui);letter-spacing:.01em;border-radius:var(--radius-md);border:var(--border-width) solid transparent;cursor:pointer;text-decoration:none;white-space:nowrap;transition:var(--transition-control);appearance:none}
+.btn.lg{height:var(--control-h-lg);padding:0 var(--space-6);font-size:var(--fs-body);gap:var(--space-3)}
+.btn.sm{height:var(--control-h-sm);padding:0 var(--space-3);font-size:var(--fs-caption)}
+.btn svg{flex:0 0 auto}
+.btn-primary{background:var(--action-primary);color:var(--text-inverse);border-color:var(--action-primary)}
+.btn-primary:hover{background:var(--action-primary-hover);border-color:var(--action-primary-hover);color:var(--text-inverse)}
+.btn-primary:active{background:var(--action-primary-active);border-color:var(--action-primary-active)}
+.btn-secondary{background:var(--action-secondary);color:var(--text-accent);border-color:var(--border-strong)}
+.btn-secondary:hover{background:var(--action-secondary-hover);border-color:var(--navy-400);color:var(--text-accent)}
+.btn-ghost{background:transparent;color:var(--text-accent);border-color:transparent}
+.btn-ghost:hover{background:var(--action-ghost-hover);color:var(--text-accent)}
+.btn-emphasis{background:var(--action-emphasis);color:var(--navy-900);border-color:var(--action-emphasis)}
+.btn-emphasis:hover{background:var(--action-emphasis-hover);border-color:var(--action-emphasis-hover);color:var(--white)}
+.btn-inverse{background:transparent;color:var(--white);border-color:var(--border-inverse)}
+.btn-inverse:hover{background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.38);color:var(--white)}
+
+/* ============================================================
+   SECTIONS
+   ============================================================ */
+.section{padding:var(--layout-section-y) 0}
+.section.sm{padding:var(--layout-section-y-sm) 0}
+.section.sunken{background:var(--surface-sunken)}
+.section.inverse{background:var(--surface-inverse);color:var(--white)}
+.section.lattice{background-image:var(--pattern-lattice-light)}
+.section.inverse.lattice{background-image:var(--pattern-lattice-dark)}
+.section-head{max-width:720px;margin-bottom:var(--space-9)}
+.section-head h2{font:var(--fw-bold) var(--fs-h2)/var(--lh-heading) var(--font-display);letter-spacing:var(--ls-heading)}
+.section.inverse .section-head h2{color:var(--white)}
+.section-head .lede{margin-top:var(--space-4)}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero .wrap{padding-top:var(--space-12);padding-bottom:var(--space-12);display:grid;grid-template-columns:1.15fr .85fr;gap:var(--space-11);align-items:center}
+.hero h1{font:var(--fw-black) var(--fs-display-2)/var(--lh-display) var(--font-display);letter-spacing:var(--ls-display);color:var(--white)}
+.hero .lede{font-size:var(--fs-body-lg);margin-top:var(--space-6);max-width:54ch}
+.hero-actions{display:flex;gap:var(--space-4);margin-top:var(--space-8);flex-wrap:wrap}
+.quote-panel{border:1px solid var(--border-inverse);border-top:2px solid var(--amber-500);padding:var(--space-7);background:rgba(255,255,255,.03)}
+.quote-panel p{font:var(--fw-bold) var(--fs-h4)/var(--lh-snug) var(--font-display);color:var(--white);margin:0;max-width:none}
+@media (max-width:900px){.hero .wrap{grid-template-columns:1fr}}
+
+/* ============================================================
+   LISTS
+   ============================================================ */
+.list-plain{list-style:none;display:grid;gap:var(--space-3);margin:var(--space-2) 0 var(--space-5)}
+.list-plain li{position:relative;padding-left:var(--space-6);font-size:var(--fs-body);color:var(--text-secondary);max-width:var(--layout-measure)}
+.list-plain li::before{content:"";position:absolute;left:0;top:.62em;width:8px;height:2px;background:var(--navy-700)}
+.section.inverse .list-plain li{color:var(--navy-100)}
+.section.inverse .list-plain li::before{background:var(--amber-500)}
+
+.list-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-6) var(--space-8);margin:var(--space-6) 0}
+.list-grid li{list-style:none;padding-top:var(--space-3);border-top:2px solid var(--navy-700);font-size:var(--fs-body-sm);color:var(--text-secondary)}
+@media (max-width:900px){.list-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:600px){.list-grid{grid-template-columns:1fr}}
+
+/* ============================================================
+   UNIT SECTION HEADER (sub-brand lockup + accent hairline)
+   ============================================================ */
+.unit-head{border-top:2px solid var(--unit-accent,var(--navy-700));padding-top:var(--space-5);margin-bottom:var(--space-7)}
+
+/* ============================================================
+   CARD (used for the closing framework preview + emphasis boxes)
+   ============================================================ */
+.card{background:var(--surface-card);border:1px solid var(--border-default);border-radius:var(--radius-md);padding:var(--card-pad)}
+.emphasis-line{background:var(--surface-sunken);border-left:2px solid var(--amber-500);padding:var(--space-5) var(--space-6);margin:var(--space-6) 0}
+.emphasis-line p{font:var(--fw-bold) var(--fs-body-lg)/var(--lh-snug) var(--font-body);color:var(--text-primary);margin:0;max-width:none}
+.section.inverse .emphasis-line{background:rgba(255,255,255,.04)}
+.section.inverse .emphasis-line p{color:var(--white)}
+
+blockquote{margin:0;padding:var(--space-6) var(--space-7);border-left:2px solid var(--amber-500);background:var(--surface-sunken)}
+blockquote p{font:var(--fw-bold) var(--fs-h4)/var(--lh-snug) var(--font-display);color:var(--text-primary);margin:0;max-width:none}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.site-footer{background:var(--surface-inverse-alt);color:var(--navy-100)}
+.site-footer .wrap{padding:var(--space-9) var(--layout-gutter-lg) var(--space-7);display:flex;flex-direction:column;gap:var(--space-4)}
+.site-footer .tagline{font:var(--fw-regular) var(--fs-body)/var(--lh-snug) Georgia,serif;font-style:italic;color:var(--navy-200);margin-top:var(--space-2)}
+.site-footer .place{font:var(--fw-regular) var(--fs-body-sm)/1 var(--font-body);color:var(--navy-300);margin-top:var(--space-1)}
+
+.divider-space{height:0}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="#top" class="wordmark" aria-label="Project Baseplate — home">
+      <span class="pb-project">Project</span>
+      <span class="pb-base">Baseplate</span>
+    </a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="#why-we-exist">Why we exist</a>
+      <a href="#collective">Collective</a>
+      <a href="#advisory">Advisory</a>
+      <a href="#frameworks">Frameworks</a>
+      <a href="#who-we-serve">Who we serve</a>
+      <a href="#join-us">Join us</a>
+    </nav>
+    <div class="header-cta">
+      <a class="btn btn-emphasis sm" href="#join-us">Join the Collective</a>
+    </div>
+  </div>
+  <div class="baseplate-edge"></div>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO ============ -->
+  <section class="section inverse lattice hero">
+    <div class="wrap">
+      <div>
+        <div class="eyebrow on-inverse">Building the next generation of condominium leadership</div>
+        <h1>Building the Next Generation of Condominium Leadership.</h1>
+        <p class="lede on-inverse"><strong>Condominium boards are running multi-million-dollar organizations with volunteer leadership and surprisingly little operational support. We're working to change that.</strong></p>
+        <p class="lede on-inverse">Project Baseplate is a community of condominium board leaders and advisors working to improve governance, operations, and resident experience through peer collaboration, proven frameworks, and practical expertise. We are building the methodologies, operating practices, and professional networks needed to modernize how condominium communities are governed and managed.</p>
+        <div class="hero-actions">
+          <a class="btn btn-emphasis lg" href="#join-us">Join the Collective</a>
+          <a class="btn btn-inverse lg" href="#why-we-exist">Learn More</a>
+        </div>
+      </div>
+      <div class="quote-panel">
+        <p>Most condominium associations are governed by volunteers, managed by vendors, and operated without a true leadership framework. Project Baseplate exists to close that gap.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHY WE EXIST ============ -->
+  <section class="section" id="why-we-exist">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Why We Exist</h2>
+      </div>
+      <p>Condominium associations are responsible for complex organizations that include:</p>
+      <ul class="list-plain">
+        <li>Multi-million-dollar operating budgets</li>
+        <li>Significant reserve funds and capital projects</li>
+        <li>Professional staff and vendors</li>
+        <li>Complex financial, legal, operational, and governance requirements</li>
+        <li>The homes and investments of hundreds of residents</li>
+      </ul>
+      <p>Yet most boards are composed of volunteers.</p>
+      <p>Across Chicago, board leaders encounter many of the same challenges:</p>
+      <ul class="list-plain">
+        <li>Management companies focused on administration rather than leadership</li>
+        <li>Inconsistent policies, procedures, and operating practices</li>
+        <li>Limited access to strategic planning and organizational expertise</li>
+        <li>Poor communication, transparency, and accountability</li>
+        <li>Institutional knowledge that disappears as board leadership changes</li>
+        <li>Major projects executed without proven frameworks or methodologies</li>
+        <li>Volunteer board members pulled into work that should be handled by management</li>
+      </ul>
+      <p>The result is a recurring cycle of reactive decision-making, operational inefficiency, and frustration for boards, residents, staff, and management teams.</p>
+      <div class="emphasis-line"><p>We believe condominium communities deserve better.</p></div>
+    </div>
+  </section>
+
+  <!-- ============ WHAT IS PROJECT BASEPLATE ============ -->
+  <section class="section sunken" id="what-is">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>What Is Project Baseplate?</h2>
+      </div>
+      <p class="measure">Project Baseplate is an initiative focused on raising the standard of condominium governance and operations.</p>
+      <p class="measure">We bring together engaged board leaders, experienced operators, and subject-matter experts to share knowledge, develop practical frameworks, and build the operational foundation that condominium communities need to thrive.</p>
+      <p class="measure">We are not another management company.</p>
+      <div class="emphasis-line"><p>We are building the expertise, methodologies, and community that boards often expect from management companies but rarely receive.</p></div>
+      <p class="measure">Project Baseplate serves as the umbrella for a growing community and an emerging set of advisory services, frameworks, and practical tools.</p>
+    </div>
+  </section>
+
+  <!-- ============ COLLECTIVE ============ -->
+  <section class="section" id="collective" style="--unit-accent:var(--subbrand-collective)">
+    <div class="wrap">
+      <div class="unit-head wordmark">
+        <span class="pb-project">Project</span>
+        <span class="pb-desc">
+          <span class="pb-base">Baseplate</span>
+          <span class="pb-desc-rule" aria-hidden="true"></span>
+          <span class="pb-desc-word">Collective</span>
+        </span>
+      </div>
+      <div class="section-head">
+        <h2>Learn from leaders facing the same challenges.</h2>
+      </div>
+      <p class="measure">Project Baseplate Collective is a growing network of condominium board presidents, officers, committee leaders, and former board members committed to improving how their communities operate.</p>
+      <p>Together, members share:</p>
+      <ul class="list-grid">
+        <li>Lessons learned from serving on condominium boards</li>
+        <li>Real-world operating practices</li>
+        <li>Capital project experiences</li>
+        <li>Governance approaches</li>
+        <li>Policy and procedure frameworks</li>
+        <li>Management company insights</li>
+        <li>Practical solutions to recurring challenges</li>
+      </ul>
+      <p class="measure">The Collective creates a trusted forum for candid conversation among people who understand the responsibilities, constraints, and opportunities facing condominium boards.</p>
+      <div class="emphasis-line"><p>No board should have to solve every problem alone.</p></div>
+      <a class="btn btn-primary" href="#join-us">Join Project Baseplate Collective</a>
+    </div>
+  </section>
+
+  <!-- ============ ADVISORY ============ -->
+  <section class="section sunken" id="advisory" style="--unit-accent:var(--subbrand-advisory)">
+    <div class="wrap">
+      <div class="unit-head wordmark">
+        <span class="pb-project">Project</span>
+        <span class="pb-desc">
+          <span class="pb-base">Baseplate</span>
+          <span class="pb-desc-rule" aria-hidden="true"></span>
+          <span class="pb-desc-word">Advisory</span>
+        </span>
+      </div>
+      <div class="section-head">
+        <h2>Practical expertise for boards pursuing operational excellence.</h2>
+      </div>
+      <p class="measure">Project Baseplate Advisory helps condominium associations address consequential organizational and operational challenges that frequently fall outside the capabilities of traditional management arrangements.</p>
+      <p>Potential areas of focus include:</p>
+      <ul class="list-grid">
+        <li>Board governance and effectiveness</li>
+        <li>Operational assessments</li>
+        <li>Strategic and long-range planning</li>
+        <li>Management company evaluations and transitions</li>
+        <li>Staffing and organizational design</li>
+        <li>Policy and procedure development</li>
+        <li>Resident communication and transparency</li>
+        <li>Capital project governance</li>
+        <li>Performance measurement and accountability</li>
+        <li>Documentation of repeatable management systems</li>
+      </ul>
+      <p class="measure">Our purpose is straightforward:</p>
+      <div class="emphasis-line"><p>Help condominium communities run with the discipline of a well-managed organization and the transparency their residents deserve.</p></div>
+      <a class="btn btn-primary" href="#join-us">Start a Conversation</a>
+    </div>
+  </section>
+
+  <!-- ============ FRAMEWORKS ============ -->
+  <section class="section" id="frameworks" style="--unit-accent:var(--subbrand-frameworks)">
+    <div class="wrap">
+      <div class="unit-head wordmark">
+        <span class="pb-project">Project</span>
+        <span class="pb-desc">
+          <span class="pb-base">Baseplate</span>
+          <span class="pb-desc-rule" aria-hidden="true"></span>
+          <span class="pb-desc-word">Frameworks</span>
+        </span>
+      </div>
+      <div class="section-head">
+        <h2>Practical systems for the work boards should not have to invent from scratch.</h2>
+      </div>
+      <p class="measure">Project Baseplate is developing reusable methodologies, templates, and operating practices that condominium boards and their management partners can adapt to the needs of their communities.</p>
+      <p>The long-term framework library may include:</p>
+      <ul class="list-grid">
+        <li>Board operating frameworks</li>
+        <li>Annual governance and planning calendars</li>
+        <li>Management transition playbooks</li>
+        <li>Capital project governance models</li>
+        <li>Staffing and organizational templates</li>
+        <li>Resident communication standards</li>
+        <li>Operational policies and procedures</li>
+        <li>Board packet and management-reporting standards</li>
+        <li>Strategic planning methodologies</li>
+        <li>Contract and vendor-management systems</li>
+      </ul>
+      <p class="measure">These are the foundational tools boards often assume their management companies already provide, but too often do not.</p>
+    </div>
+  </section>
+
+  <!-- ============ WHO WE SERVE ============ -->
+  <section class="section sunken" id="who-we-serve">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Who We Serve</h2>
+      </div>
+      <p class="measure">Project Baseplate is initially focused on Chicago high-rise condominium communities, particularly those with:</p>
+      <ul class="list-plain">
+        <li>Approximately 100 to 500 residential units</li>
+        <li>Volunteer-led boards</li>
+        <li>Professional management</li>
+        <li>On-site building staff and complex daily operations</li>
+        <li>Significant capital, staffing, vendor, and governance responsibilities</li>
+        <li>A desire for greater operational maturity, transparency, and accountability</li>
+      </ul>
+      <p class="measure">We are especially interested in connecting with current and former board leaders who believe condominium governance can and should be better.</p>
+    </div>
+  </section>
+
+  <!-- ============ WHY "BASEPLATE"? ============ -->
+  <section class="section" id="why-baseplate">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Why &ldquo;Baseplate&rdquo;?</h2>
+      </div>
+      <p class="measure">A baseplate is the foundation that helps a structure stand securely, carry weight, and operate as designed.</p>
+      <p class="measure">Too many condominium communities operate without the foundational systems, processes, institutional knowledge, and leadership frameworks required for long-term success.</p>
+      <div class="emphasis-line"><p>Project Baseplate exists to help build that foundation.</p></div>
+    </div>
+  </section>
+
+  <!-- ============ OUR VISION ============ -->
+  <section class="section sunken" id="vision">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Our Vision</h2>
+      </div>
+      <p class="measure">We believe there is an opportunity to fundamentally improve how condominium communities are governed and operated.</p>
+      <p>By combining:</p>
+      <ul class="list-plain">
+        <li>Peer collaboration</li>
+        <li>Proven operating frameworks</li>
+        <li>Modern governance practices</li>
+        <li>Practical advisory services</li>
+        <li>Tools that preserve and transfer institutional knowledge</li>
+      </ul>
+      <p class="measure">we can help create stronger boards, more capable organizations, and better resident experiences.</p>
+      <p class="measure">The Collective is the movement. Advisory work applies the ideas. Frameworks make the knowledge reusable. Project Baseplate is the foundation connecting them.</p>
+    </div>
+  </section>
+
+  <!-- ============ JOIN US ============ -->
+  <section class="section inverse lattice" id="join-us">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Join Us</h2>
+      </div>
+      <p class="lede on-inverse">We are beginning with a small group of engaged current and former condominium board leaders who want to compare experiences, identify shared challenges, and help shape a better model for condominium leadership and operations.</p>
+      <p class="lede on-inverse">If you are a current or former board officer, committee leader, experienced operator, or subject-matter expert who believes Chicago's condominium communities can be governed and operated more effectively, we would like to hear from you.</p>
+      <div class="hero-actions">
+        <a class="btn btn-emphasis lg" href="mailto:hello@projectbaseplate.example?subject=Project%20Baseplate%20Collective">Join Project Baseplate Collective</a>
+        <a class="btn btn-inverse lg" href="mailto:hello@projectbaseplate.example?subject=Project%20Baseplate%20Advisory">Discuss an Advisory Need</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="baseplate-edge"></div>
+  <div class="wrap">
+    <div class="wordmark on-inverse lg">
+      <span class="pb-project">Project</span>
+      <span class="pb-base">Baseplate</span>
+    </div>
+    <p class="tagline">Building the Next Generation of Condominium Leadership.</p>
+    <p class="place">Chicago, Illinois</p>
+  </div>
+</footer>
+
+</body>
+</html>
