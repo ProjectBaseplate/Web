@@ -195,7 +195,14 @@ em{font-style:italic}
    ============================================================ */
 .card-grid{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-5);margin:var(--space-6) 0;padding:0;position:relative;z-index:1}
 .card-grid li{background:var(--navy-800);border:var(--border-width) solid var(--navy-600);border-top:var(--rule-strong) solid var(--unit-accent,var(--amber-500));border-radius:var(--radius-md);padding:var(--space-5);font-size:var(--fs-body-sm);line-height:var(--lh-snug);color:var(--navy-100);transition:var(--transition-surface),background-color var(--dur-base) var(--ease-standard),color var(--dur-base) var(--ease-standard),border-color var(--dur-base) var(--ease-standard)}
-.card-grid li:hover{background:var(--white);border-color:var(--border-default);border-top-color:var(--unit-accent,var(--navy-700));color:var(--text-secondary);box-shadow:var(--shadow-2)}
+.card-grid li:hover{background:var(--navy-100);border-color:var(--navy-300);border-top-color:var(--unit-accent,var(--navy-700));color:var(--text-accent);box-shadow:var(--shadow-2)}
+/* Sub-brand sections: cards run a dark-to-light gradient of that unit's own accent color, not neutral navy */
+#collective .card-grid li{background:var(--amber-700);border-color:var(--amber-600);color:var(--amber-100)}
+#collective .card-grid li:hover{background:var(--amber-100);border-color:var(--amber-300);color:var(--amber-700)}
+#advisory .card-grid li{background:var(--navy-800);border-color:var(--navy-600);color:var(--navy-100)}
+#advisory .card-grid li:hover{background:var(--navy-100);border-color:var(--navy-300);color:var(--navy-700)}
+#frameworks .card-grid li{background:var(--steel-800);border-color:var(--steel-600);color:var(--steel-100)}
+#frameworks .card-grid li:hover{background:var(--steel-100);border-color:var(--steel-300);color:var(--steel-800)}
 @media (max-width:900px){.card-grid{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:600px){.card-grid{grid-template-columns:1fr}}
 .card-grid.cols-2{grid-template-columns:repeat(2,1fr)}
